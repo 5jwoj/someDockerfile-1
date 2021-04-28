@@ -1,6 +1,12 @@
 #!/bin/sh
 
 mergedListFile="/scripts/docker/merged_list_file.sh"
+shareCodesUrl="https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\\"
+shareCodeszz="$shareCodesUrl/jd_zz.json"
+shareCodesCash="$shareCodesUrl/jd_updateCash.json"
+shareCodesBeanHome="$shareCodesUrl/jd_updateBeanHome.json"
+shareCodesFactoryTuanId="$shareCodesUrl/jd_updateFactoryTuanId.json"
+shareCodesSmallHomeInviteCode="$shareCodesUrl/jd_updateSmallHomeInviteCode.json"
 
 if [[ -f /usr/bin/jd_bot && -z "$DISABLE_SPNODE" ]]; then
    CMD="spnode"
@@ -48,22 +54,22 @@ sed -i "s/find.*$/find \/scripts\/logs -name '\*.log' \| grep -v 'sharecodeColle
 # 超级直播间红包雨
 sed -i "s/^.*jd_live_redrain.*$/#&/g" $mergedListFile
 
-## 京喜工厂
-sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/factory.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateFactoryTuanId.json/g" /scripts/jd_dreamFactory.js
-sed -i "s/https:\/\/raw.githubusercontent.com\/gitupdate\/updateTeam\/master\/shareCodes\/jd_updateFactoryTuanId.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateFactoryTuanId.json/g" /scripts/jd_dreamFactory.js
-sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateFactoryTuanId.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateFactoryTuanId.json/g" /scripts/jd_dreamFactory.js
-## 领京豆
-sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateBeanHome.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateBeanHome.json/g" /scripts/jd_bean_home.js
+## 赚京豆
+sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/jd_zz.json/$shareCodeszz/g" /scripts/jd_syj.js
+sed -i "s/https:\/\/raw.githubusercontent.com\/gitupdate\/updateTeam\/master\/shareCodes\/jd_zz.json/$shareCodeszz/g" /scripts/jd_syj.js
 ## 签到领现金
 sed -i "32,33s/^..*$/  \`aUNmM6_nOP4j-W4@eU9Yau3kZ_4g-DiByHEQ0A@eU9YaOvnM_4k9WrcnnAT1Q@eU9Yar-3M_8v9WndniAQhA@f0JyJuW7bvQ@IhM0bu-0b_kv8W6E@eU9YKpnxOLhYtQSygTJQ@-oaWtXEHOrT_bNMMVso@eU9YG7XaD4lXsR2krgpG\`,/g" /scripts/jd_cash.js
-sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/jd_cash.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateCash.json/g" /scripts/jd_cash.js
-sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateCash.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateCash.json/g" /scripts/jd_cash.js
+sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/jd_cash.json/$shareCodesCash/g" /scripts/jd_cash.js
+sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateCash.json/$shareCodesCash/g" /scripts/jd_cash.js
+## 领京豆
+sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateBeanHome.json/$shareCodesBeanHome/g" /scripts/jd_bean_home.js
+## 京喜工厂
+sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/factory.json/$shareCodesFactoryTuanId/g" /scripts/jd_dreamFactory.js
+sed -i "s/https:\/\/raw.githubusercontent.com\/gitupdate\/updateTeam\/master\/shareCodes\/jd_updateFactoryTuanId.json/$shareCodesFactoryTuanId/g" /scripts/jd_dreamFactory.js
+sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateFactoryTuanId.json/$shareCodesFactoryTuanId/g" /scripts/jd_dreamFactory.js
 ## 东东小窝
-sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateSmallHomeInviteCode.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateSmallHomeInviteCode.json/g" /scripts/jd_small_home.js
-sed -i "s/https:\/\/raw.githubusercontent.com\/LXK9301\/updateTeam\/master\/jd_updateSmallHomeInviteCode.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_updateSmallHomeInviteCode.json/g" /scripts/jd_small_home.js
-## 赚京豆
-sed -i "s/http:\/\/qr6pzoy01.hn-bkt.clouddn.com\/jd_zz.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_zz.json/g" /scripts/jd_syj.js
-sed -i "s/https:\/\/raw.githubusercontent.com\/gitupdate\/updateTeam\/master\/shareCodes\/jd_zz.json/https:\/\/ghproxy.com\/https:\/\/raw.githubusercontent.com\/Aaron-lv\/updateTeam\/master\/shareCodes\/jd_zz.json/g" /scripts/jd_syj.js
+sed -i "s/https:\/\/cdn.jsdelivr.net\/gh\/gitupdate\/updateTeam@master\/shareCodes\/jd_updateSmallHomeInviteCode.json/$shareCodesSmallHomeInviteCode/g" /scripts/jd_small_home.js
+sed -i "s/https:\/\/raw.githubusercontent.com\/LXK9301\/updateTeam\/master\/jd_updateSmallHomeInviteCode.json/$shareCodesSmallHomeInviteCode/g" /scripts/jd_small_home.js
 ## 美丽研究院
 sed -i "s/Mozilla\/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/14.0.3 Mobile\/15E148 Safari\/604.1/jdapp;iPhone;9.4.8;14.5;21e3e4be5bda669612c3ca00130f6e8e5a6e2653;network\/wifi;supportApplePay\/0;hasUPPay\/0;hasOCPay\/0;model\/iPhone12,3;addressid\/766018041;supportBestPay\/0;appBuild\/167629;jdSupportDarkMode\/0;Mozilla\/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Mobile\/15E148;supportJDSHWK\/1/g" /scripts/jd_beauty.js
 ## 口袋书店
