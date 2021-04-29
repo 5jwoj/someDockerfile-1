@@ -12,7 +12,7 @@ fi
 ## 克隆monk-coder仓库
 if [ ! -d "/monk-coder/" ]; then
     echo "未检查到monk-coder仓库脚本，初始化下载相关脚本..."
-    git clone -b dust git@github.com:Aaron-lv/dust /monk-coder
+    git clone -b dust https://github.com/Aaron-lv/sync /monk-coder
 else
     echo "更新monk-coder脚本相关文件..."
     git -C /monk-coder reset --hard
@@ -40,7 +40,7 @@ fi
 
 ## 删除不运行脚本
 if [ -n "$(ls /scripts/[mz]*_*.js)" ]; then
-    js_del="z_tcl_lining&z_entertainment&z_getFanslove&z_health_community&z_health_energy&z_marketLottery&z_shake&z_super5g&z_xmf"
+    js_del="z_tcl_lining&z_getFanslove&z_health_community&z_health_energy&z_marketLottery&z_shake&z_super5g&z_xmf"
     arr=${js_del//&/ }
     for item in $arr; do
         rm -rf /scripts/$item.js
