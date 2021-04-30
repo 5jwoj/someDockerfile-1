@@ -1,9 +1,22 @@
 #!/bin/sh
 set -e
 
+function initCdn() {
+    sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+    mkdir -p /root/.pip
+    (
+        cat <<EOF
+[global]
+timeout = 6000
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+EOF
+    ) > /root/.pip/pip.conf
+}
+
 #获取配置的自定义参数
 if [ $1 ]; then
     run_cmd=$1
+    initCdn
 fi
 
 cd /pss

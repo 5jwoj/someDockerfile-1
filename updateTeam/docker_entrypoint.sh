@@ -1,9 +1,14 @@
 #!/bin/sh
 set -e
 
+function initCdn() {
+    sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+}
+
 #获取配置的自定义参数
 if [ $1 ]; then
     run_cmd=$1
+    initCdn
 fi
 
 echo "设定远程仓库地址..."

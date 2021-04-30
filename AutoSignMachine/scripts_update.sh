@@ -15,6 +15,7 @@ echo "更新AutoSignMachine仓库脚本..."
 git reset --hard
 git pull origin main --rebase
 echo "安装最新依赖..."
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
 
@@ -47,7 +48,6 @@ if [ $ENABLE_UNICOM ]; then
         echo "$sub_dir"
         pwd=$(echo $pwds | cut -d ',' -f$i)
         appid="$(echo $appids | cut -d ',' -f$i)"
-        #echo $appid
         echo "UNICOM_USERNAME = '$username'" >/"$sub_dir"/config/.env
         echo "UNICOM_PASSWORD = '$pwd'" >>/"$sub_dir"/config/.env
         echo "UNICOM_APPID = '$appid'" >>/"$sub_dir"/config/.env
