@@ -14,8 +14,7 @@ if [ -f "/scripts/jd_red_rain.js" ]; then
     red_url_id="$(echo $red_url_tmp | cut -d \, -f2)"
     red_rain_control="$(echo $red_url_control | cut -d \& -f1)"
     live_redrain_control="$(echo $red_url_control | cut -d \& -f2)"
-
-    if [ "$(date +%-M)" != "30" ]; then
+    if [[ "$(date +%-M)" -ge "0" && "$(date +%-M)" -le "5" ]]; then
         echo "运行整点红包雨，开始获取红包雨活动id..."
         if [ "$red_rain_control" == "0" ]; then
             red_id="$red_url_id"
@@ -27,9 +26,7 @@ if [ -f "/scripts/jd_red_rain.js" ]; then
         for item in $arr; do
             sh -x /scripts/docker/red_rain.sh $item
         done
-    fi
-
-    if [ "$(date +%-M)" == "30" ]; then
+    elif [[ "$(date +%-M)" -ge "30" && "$(date +%-M)" -le "35" ]]; then
         if [ "$live_redrain_control" == "0" ]; then
             echo "配置不运行超级直播间红包雨，跳过执行..."
         else
@@ -42,6 +39,9 @@ if [ -f "/scripts/jd_red_rain.js" ]; then
                 $CMD /scripts/jd_live_redrain.js |ts >> /scripts/logs/jd_live_redrain.log 2>&1
             done
         fi
+    else
+        echo "不在红包雨活动时间，跳过执行..."
     fi
-
+else
+    echo "红包雨脚本不存在，跳过执行..."
 fi
