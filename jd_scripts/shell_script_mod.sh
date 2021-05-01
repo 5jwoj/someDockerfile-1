@@ -71,6 +71,12 @@ if [ $jd_try_ENABLE = "Y" ]; then
     echo "30 10 * * * node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1" >> $mergedListFile
 fi
 
+## 京东天天加速
+if [ -f "/scripts/jd_speed.js" ]; then
+    echo "# 京东天天加速" >> $mergedListFile
+    echo "28 */3 * * * node /scripts/jd_speed.js >> /scripts/logs/jd_speed.log 2>&1" >> $mergedListFile
+fi
+
 ## 红包雨
 wget -O /scripts/jd_red_rain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_red_rain.js
 wget -O /scripts/jd_live_redrain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_live_redrain.js

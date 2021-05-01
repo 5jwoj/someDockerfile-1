@@ -41,8 +41,6 @@ sed -i "s/47 8 \* \* \* node \/scripts\/jd_sgmh.js/55 8,23 \* \* \* node \/scrip
 sed -i "s/10 6,7 \* \* \* node \/scripts\/jd_family.js/30 6,15 \* \* \* node \/scripts\/jd_family.js/g" $mergedListFile
 ## 修改美丽颜究院定时
 sed -i "s/41 7,12,19 \* \* \* node \/scripts\/jd_beauty.js/30 8,13,20 \* \* \* node \/scripts\/jd_beauty.js/g" $mergedListFile
-## 修改取关京东店铺商品定时
-sed -i "s/45 23 \* \* \* node \/scripts\/jd_unsubscribe.js/45 \*\/2 \* \* \* node \/scripts\/jd_unsubscribe.js/g" $mergedListFile
 ## 修改口袋书店定时
 sed -i "s/38 8,12,18 \* \* \* node \/scripts\/jd_bookshop.js/20 8,12,18 \* \* \* node \/scripts\/jd_bookshop.js/g" $mergedListFile
 ## 修改京东极速版红包定时
