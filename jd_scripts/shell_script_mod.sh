@@ -59,17 +59,22 @@ for jsname in $jsnames; do
     test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
 done
 
-## 红包雨
-wget -O /scripts/jd_red_rain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_red_rain.js
-wget -O /scripts/jd_live_redrain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_live_redrain.js
-if [ -f "/jds/jd_scripts/red_rain_remote.sh" ]; then
-    echo "# 红包雨" >> $mergedListFile
-    echo "0,30 0-23/1 * * * sh /jds/jd_scripts/red_rain_remote.sh >> /dev/null 2>&1" >> $mergedListFile
-fi
+## 店铺签到
+wget -O /scripts/jd_shop_sign.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_shop_sign.js
+echo "# 店铺签到" >> $mergedListFile
+echo "0 0 * * * node /scripts/jd_shop_sign.js >> /scripts/logs/jd_shop_sign.log 2>&1" >> $mergedListFile
 
 ## 京东试用
 if [ $jd_try_ENABLE = "Y" ]; then
     wget -O /scripts/jd_try.js https://ghproxy.com/https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_try.js
     echo "# 京东试用" >> $mergedListFile
     echo "30 10 * * * node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1" >> $mergedListFile
+fi
+
+## 红包雨
+wget -O /scripts/jd_red_rain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_red_rain.js
+wget -O /scripts/jd_live_redrain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_live_redrain.js
+if [ -f "/jds/jd_scripts/red_rain_remote.sh" ]; then
+    echo "# 红包雨" >> $mergedListFile
+    echo "0,30 0-23/1 * * * sh /jds/jd_scripts/red_rain_remote.sh >> /dev/null 2>&1" >> $mergedListFile
 fi
