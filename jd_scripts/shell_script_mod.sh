@@ -40,23 +40,23 @@ fi
 
 ## 删除不运行脚本
 if [ -n "$(ls /scripts/[mz]*_*.js)" ]; then
-    js_del="z_tcl_lining&z_getFanslove&z_health_community&z_health_energy&z_marketLottery&z_shake&z_super5g&z_xmf"
+    js_del="z_tcl_lining&z_health_community&z_health_energy&z_marketLottery&z_shake&z_super5g&z_xmf"
     arr=${js_del//&/ }
     for item in $arr; do
         rm -rf /scripts/$item.js
     done
 fi
 
-## 添加monk-coder仓库脚本定时
-echo "添加monk-coder仓库脚本,脚本列表:"
+## 添加自定义脚本定时
+echo "添加自定义脚本,脚本列表:"
 jsnames="$(cd /scripts && ls [mz]*_*.js)"
 for jsname in $jsnames; do
-    echo $jsname
     jsname_log="$(echo $jsname | cut -d \. -f1)"
     jscron="$(cat /scripts/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
     jsname_cn="$(cat /scripts/$jsname | grep -oE "/?/?const.*\$" | cut -d \' -f2 | cut -d \" -f2 | sed -n "1p")"
     test -n "$jscron" && test -n "$jsname_cn" && echo "# $jsname_cn" >> $mergedListFile
     test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
+    test -n "$jscron" && echo $jsname
 done
 
 ## 店铺签到
