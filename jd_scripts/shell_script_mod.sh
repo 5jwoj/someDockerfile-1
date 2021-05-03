@@ -66,12 +66,16 @@ echo "添加自定义脚本,脚本列表:"
 jsnames="$(cd /scripts && ls [jmz]*_*.js)"
 for jsname in $jsnames; do
     if [ $(grep -c "$jsname" "$mergedListFile") -eq '0' ]; then
-        jsname_log="$(echo $jsname | cut -d \. -f1)"
-        jscron="$(cat /scripts/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
-        jsname_cn="$(cat /scripts/$jsname | grep -oE "/?/?const.*\$" | cut -d \' -f2 | cut -d \" -f2 | sed -n "1p")"
-        test -n "$jscron" && test -n "$jsname_cn" && echo "# $jsname_cn" >> $mergedListFile
-        test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
-        test -n "$jscron" && echo $jsname
+        if [ "$jsname" == "jd_crazy_joy_coin.js" ]; then
+            continue
+        else
+            jsname_log="$(echo $jsname | cut -d \. -f1)"
+            jscron="$(cat /scripts/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
+            jsname_cn="$(cat /scripts/$jsname | grep -oE "/?/?const.*\$" | cut -d \' -f2 | cut -d \" -f2 | sed -n "1p")"
+            test -n "$jscron" && test -n "$jsname_cn" && echo "# $jsname_cn" >> $mergedListFile
+            test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
+            test -n "$jscron" && echo $jsname
+        fi
     fi
 done
 
