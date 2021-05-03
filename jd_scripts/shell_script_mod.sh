@@ -23,7 +23,7 @@ fi
 jsnames="$(cd /scripts && ls [jmz]*_*.js)"
 for jsname in $jsnames; do
     if [ $(grep -c "$jsname" "$mergedListFile") -eq '0' ]; then
-        if [ "$jsname" == "jd_speed.js" ]; then
+        if [[ "$jsname" == "jd_speed.js" || "$jsname" == "jd_crazy_joy_coin.js" ]]; then
             continue
         else
             rm -rf /scripts/$jsname
