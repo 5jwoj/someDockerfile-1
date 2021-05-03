@@ -19,24 +19,26 @@ else
     git -C /monk-coder pull origin dust --rebase
 fi
 
-## 删除运行目录的monk-coder仓库脚本
-if [ -n "$(ls /scripts/[mz]*_*.js)" ]; then
-    rm -rf /scripts/[mz]*_*.js
-fi
+## 删除运行目录中不在定时文件里的脚本
+jsnames="$(cd /scripts && ls [jmz]*_*.js)"
+for jsname in $jsnames; do
+    if [ $(grep -c "$jsname" "$mergedListFile") -eq '0' ]; then
+        if [ "$jsname" == "jd_speed.js" ]; then
+            continue
+        else
+            rm -rf /scripts/$jsname
+        fi
+    fi
+done
 
 ## 复制monk-coder仓库脚本到运行目录
-if [ -n "$(ls /monk-coder/car/*_*.js)" ]; then
-    cp -f /monk-coder/car/*_*.js /scripts
-fi
-if [ -n "$(ls /monk-coder/i-chenzhe/*_*.js)" ]; then
-    cp -f /monk-coder/i-chenzhe/*_*.js /scripts
-fi
-if [ -n "$(ls /monk-coder/member/*_*.js)" ]; then
-    cp -f /monk-coder/member/*_*.js /scripts
-fi
-if [ -n "$(ls /monk-coder/normal/*_*.js)" ]; then
-    cp -f /monk-coder/normal/*_*.js /scripts
-fi
+js_dir="car&i-chenzhe&member&normal"
+arr=${js_dir//&/ }
+for item in $arr; do
+    if [ -n "$(ls /monk-coder/$item/[mz]*_*.js)" ]; then
+        cp -f /monk-coder/$item/[mz]*_*.js /scripts
+    fi
+done
 
 ## 删除不运行脚本
 if [ -n "$(ls /scripts/[mz]*_*.js)" ]; then
@@ -47,39 +49,33 @@ if [ -n "$(ls /scripts/[mz]*_*.js)" ]; then
     done
 fi
 
-## 添加自定义脚本定时
-echo "添加自定义脚本,脚本列表:"
-jsnames="$(cd /scripts && ls [mz]*_*.js)"
-for jsname in $jsnames; do
-    jsname_log="$(echo $jsname | cut -d \. -f1)"
-    jscron="$(cat /scripts/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
-    jsname_cn="$(cat /scripts/$jsname | grep -oE "/?/?const.*\$" | cut -d \' -f2 | cut -d \" -f2 | sed -n "1p")"
-    test -n "$jscron" && test -n "$jsname_cn" && echo "# $jsname_cn" >> $mergedListFile
-    test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
-    test -n "$jscron" && echo $jsname
-done
-
-## 店铺签到
-wget -O /scripts/jd_shop_sign.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_shop_sign.js
-echo "# 店铺签到" >> $mergedListFile
-echo "0 0 * * * node /scripts/jd_shop_sign.js >> /scripts/logs/jd_shop_sign.log 2>&1" >> $mergedListFile
+## 添加自定义脚本
 
 ## 京东试用
 if [ $jd_try_ENABLE = "Y" ]; then
     wget -O /scripts/jd_try.js https://ghproxy.com/https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_try.js
-    echo "# 京东试用" >> $mergedListFile
-    echo "30 10 * * * node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1" >> $mergedListFile
 fi
-
-## 京东天天加速
-if [ -f "/scripts/jd_speed.js" ]; then
-    echo "# 京东天天加速" >> $mergedListFile
-    echo "28 */3 * * * node /scripts/jd_speed.js >> /scripts/logs/jd_speed.log 2>&1" >> $mergedListFile
-fi
-
+## 店铺签到
+wget -O /scripts/jd_shop_sign.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_shop_sign.js
 ## 红包雨
 wget -O /scripts/jd_red_rain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_red_rain.js
 wget -O /scripts/jd_live_redrain.js https://ghproxy.com/https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_live_redrain.js
+
+## 添加自定义脚本定时
+echo "添加自定义脚本,脚本列表:"
+jsnames="$(cd /scripts && ls [jmz]*_*.js)"
+for jsname in $jsnames; do
+    if [ $(grep -c "$jsname" "$mergedListFile") -eq '0' ]; then
+        jsname_log="$(echo $jsname | cut -d \. -f1)"
+        jscron="$(cat /scripts/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
+        jsname_cn="$(cat /scripts/$jsname | grep -oE "/?/?const.*\$" | cut -d \' -f2 | cut -d \" -f2 | sed -n "1p")"
+        test -n "$jscron" && test -n "$jsname_cn" && echo "# $jsname_cn" >> $mergedListFile
+        test -n "$jscron" && echo "$jscron node /scripts/$jsname >> /scripts/logs/$jsname_log.log 2>&1" >> $mergedListFile
+        test -n "$jscron" && echo $jsname
+    fi
+done
+
+##红包雨定时
 if [ -f "/jds/jd_scripts/red_rain_remote.sh" ]; then
     echo "# 红包雨" >> $mergedListFile
     echo "0,30 0-23/1 * * * sh /jds/jd_scripts/red_rain_remote.sh >> /dev/null 2>&1" >> $mergedListFile
